@@ -8,24 +8,28 @@ import { fetchMovies } from '../../services/movieService';
 
 import SearchBar from '../SearchBar/SearchBar';
 import MovieGrid from '../MovieGrid/MovieGrid';
+import Loader from '../Loader/Loader';
+import ErrorMessage from '../ErrorMessage/ErrorMessage';
 
 function App() {
   const [movies, setMovies] = useState<Movie[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
 
   const handleSearch = async (query: string) => {
     setMovies([]);
+    setIsLoading(true);
     try {
       const movies = await fetchMovies(query);
       if (!movies.length) {
         notify('No movies found for your request.');
         return;
       }
-
       setMovies(movies);
-    } catch (error) {
-      console.log(error);
+    } catch {
+      setIsError(true);
     } finally {
-      console.log('Anyway, Ok');
+      setIsLoading(false);
     }
   };
 
@@ -33,7 +37,8 @@ function App() {
     <div className={css.app}>
       <SearchBar onSubmit={handleSearch} />
       <Toaster toastOptions={toastOptions} />
-      <MovieGrid movies={movies} />
+      {isError ? <ErrorMessage /> : <MovieGrid movies={movies} />}
+      {isLoading && <Loader />}
     </div>
   );
 }
