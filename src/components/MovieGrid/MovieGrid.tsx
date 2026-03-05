@@ -12,6 +12,7 @@ export default function MovieGrid({ onSelect, movies }: MovieGridProps) {
       {movies.map(movie => {
         return (
           <li
+            key={movie.id}
             onClick={() => {
               onSelect(movie.id);
             }}
