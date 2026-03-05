@@ -39,7 +39,6 @@ function App() {
 
   const openModal = () => {
     setIsModalOpen(true);
-    document.body.style.overflow = 'hidden';
     return;
   };
 
@@ -51,7 +50,6 @@ function App() {
   const closeModal = () => {
     setIsModalOpen(false);
     setSelectedMovie(null);
-    document.body.style.overflow = '';
     return;
   };
 
