@@ -22,6 +22,7 @@ function App() {
   const handleSearch = async (query: string) => {
     setMovies([]);
     setIsLoading(true);
+    setIsError(false);
     try {
       const movies = await fetchMovies(query);
       if (!movies.length) {
@@ -36,18 +37,23 @@ function App() {
     }
   };
 
-  const openModal = () => setIsModalOpen(true);
-
-  const handleSelect = (movieId: number) => {
-    movies.map(movie => {
-      if (movie.id === movieId) {
-        setSelectedMovie(movie);
-        openModal();
-      }
-    });
+  const openModal = () => {
+    setIsModalOpen(true);
+    document.body.style.overflow = 'hidden';
+    return;
   };
 
-  const closeModal = () => setIsModalOpen(false);
+  const handleSelect = (movie: Movie) => {
+    setSelectedMovie(movie);
+    openModal();
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedMovie(null);
+    document.body.style.overflow = '';
+    return;
+  };
 
   return (
     <div className={css.app}>
