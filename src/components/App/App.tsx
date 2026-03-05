@@ -36,11 +36,13 @@ function App() {
     }
   };
 
+  const openModal = () => setIsModalOpen(true);
+
   const handleSelect = (movieId: number) => {
     movies.map(movie => {
       if (movie.id === movieId) {
         setSelectedMovie(movie);
-        setIsModalOpen(true);
+        openModal();
       }
     });
   };
